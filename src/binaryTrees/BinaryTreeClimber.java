@@ -10,6 +10,8 @@ public class BinaryTreeClimber {
 	static boolean flag = false;
 
 	public static void main(String[] args) {
+		
+		ls.clear();
 
 		// Populating the node values
 		int rootVal = 2;
@@ -53,10 +55,7 @@ public class BinaryTreeClimber {
 
 		// Checking the array and the tree for how it looks after sorting...
 		Node newRoot = balanceTheTree(ls);
-		for (Node node : ls) {
-			System.out.println("Node Id: " + node.getId() + " & Node Value: "
-					+ node.getValue());
-		}
+		ls.clear(); // since depthFirstTraversal() is being invoked again
 		depthFirstTraversal(newRoot, "+");
 
 		// Now the tree has been balanced, search effort has been reduced
@@ -72,12 +71,16 @@ public class BinaryTreeClimber {
 		int newElement = 9;
 		Node newNode = new Node(null, newElement, "newNode");
 		newRoot = addNewNode(newRoot, newNode);
+		ls.clear(); // since depthFirstTraversal() is being invoked again
 		depthFirstTraversal(newRoot, "+"); // checking the order, post update
+		
+		ls.clear();
 	}
 
 	private static Node addNewNode(Node node, Node newNode) {
 
 		System.out.println("Traversing the tree before adding a new node...");
+		ls.clear(); // since depthFirstTraversal() is being invoked again
 		depthFirstTraversal(node, "-"); // This method is not only traversing,
 										// but updating the list as well
 
