@@ -17,8 +17,9 @@ public class BinaryTreeClimber {
 	public static void main(String[] args) {
 
 		ls.clear();
-		
-		System.out.println("..................................Welcome to the world full of Binary Trees....................................");
+
+		System.out
+				.println("..................................Welcome to the world full of Binary Trees....................................");
 
 		// 1. Populating the node values
 		int rootVal = 2;
@@ -51,7 +52,8 @@ public class BinaryTreeClimber {
 		rootRC2Node.setRightChild(rootRC2RC2Node);
 
 		// 2. Reading the tree nodes.
-		System.out.println(".................................................. Reading the binary tree now..........................................");
+		System.out
+				.println(".................................................. Reading the binary tree now..........................................");
 		depthFirstTraversal(rootNode, "-");
 
 		// Checking the array for how it looks now...
@@ -67,7 +69,8 @@ public class BinaryTreeClimber {
 
 		// 3. Now the tree has been balanced, search effort has been reduced
 		// considerably
-		System.out.println(".................................. Searching an element in the BT ......................................");
+		System.out
+				.println(".................................. Searching an element in the BT ......................................");
 		int srchElem = 11;
 		boolean elementPresent = searchTheElement(newRoot, srchElem);
 		if (elementPresent)
@@ -77,7 +80,8 @@ public class BinaryTreeClimber {
 
 		// 4. Trying to add an element in the tree, and keeping the sorting
 		// order
-		System.out.println(".................................. Adding an element in the BT ......................................");
+		System.out
+				.println(".................................. Adding an element in the BT ......................................");
 		int newElement = 9;
 		Node newNode = new Node(null, newElement, "newNode");
 		newRoot = addNewNode(newRoot, newNode);
@@ -89,7 +93,8 @@ public class BinaryTreeClimber {
 		// remove
 		// To begin, we have to make sure that the element exists in the BT,
 		// hence need to perform search operation first
-		System.out.println(".................................. Deleting an element in the BT ......................................");
+		System.out
+				.println(".................................. Deleting an element in the BT ......................................");
 		srchElem = 9;
 		elementPresent = searchTheElement(newRoot, srchElem);
 		if (elementPresent) {
@@ -102,11 +107,33 @@ public class BinaryTreeClimber {
 					+ " is not present in the BT. Delete operation refused.");
 
 		ls.clear();
-		depthFirstTraversal(newRoot, "~"); // checking the order, post delete operation
-		
+		depthFirstTraversal(newRoot, "~"); // checking the order, post delete
+											// operation
+
+		System.out
+				.println(".................................. Finding the height of the BT ......................................");
+
+		int height = findHeight(newRoot);
+		System.out.println("Height of the tree = " + height);
 		// Pending shortest paths
 		// Pending find min and max heights
-		
+
+		/*
+		 * Depth First Traversals: (a) Inorder (Left, Root, Right) : 4 2 5 1 3
+		 * (b) Preorder (Root, Left, Right) : 1 2 4 5 3 (c) Postorder (Left,
+		 * Right, Root) : 4 5 2 3 1
+		 */
+
+		// AVL tree
+
+	}
+
+	private static int findHeight(Node node) {
+		if (null == node)
+			return 0;
+
+		return 1 + Math.max(findHeight(node.getLeftChild()),
+				findHeight(node.getRightChild()));
 	}
 
 	private static Node deleteNode(Node newRoot, int srchElem) {
