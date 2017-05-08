@@ -13,6 +13,13 @@ public class BinaryTreeClimber {
 
 	static List<Node> ls = new ArrayList<Node>();
 	static boolean flag = false;
+	static int path = 0;
+
+	static Node node1 = new Node(null, -1, "node1");
+	static Node node2 = new Node(null, -1, "node2");
+
+	static List<Integer> listForNode1 = new ArrayList<Integer>();
+	static List<Integer> listForNode2 = new ArrayList<Integer>();
 
 	public static void main(String[] args) {
 
@@ -115,10 +122,18 @@ public class BinaryTreeClimber {
 
 		int height = findHeight(newRoot);
 		System.out.println("Height of the tree = " + height);
-		// Pending shortest paths
-		// Pending find min and max heights
+
+		System.out
+				.println(".................................. Finding the shortest path ......................................");
+
+		int n1 = 2;
+		int n2 = 6;
+		int sPath = findShortestPath(newRoot, n1, n2);
+		System.out.println("Shortest path = "+sPath);
+
 
 		/*
+		 * keypoints - 
 		 * Depth First Traversals: (a) Inorder (Left, Root, Right) : 4 2 5 1 3
 		 * (b) Preorder (Root, Left, Right) : 1 2 4 5 3 (c) Postorder (Left,
 		 * Right, Root) : 4 5 2 3 1
@@ -126,6 +141,81 @@ public class BinaryTreeClimber {
 
 		// AVL tree
 
+	}
+
+	private static int findShortestPath(Node root, int n1, int n2) {
+
+		/*
+		 * Formula : Dist(n1, n2) = Dist(root, n1) + Dist(root, n2) -
+		 * 2*Dist(root, lca) 'n1' and 'n2' are the two given keys 'root' is root
+		 * of given Binary Tree. 'lca' is lowest common ancestor of n1 and n2
+		 * Dist(n1, n2) is the distance between n1 and n2.
+		 */
+		// Assuming no duplicates are involved
+		path = 0;
+
+		int l1 = findDistanceFromRoot(root, n1, "1");
+		System.out.println("Distance of " + n1 + " from root = " + l1);
+		path = 0;
+
+		int l2 = findDistanceFromRoot(root, n2, "2");
+		System.out.println("Distance of " + n2 + " from root = " + l2);
+		path = 0;
+
+		System.out.println(listForNode1);
+		System.out.println(listForNode2);
+
+		int commonAncestorValue = -1;
+		for (int i = 0; i < listForNode1.size(); i++) {
+			if (listForNode2.contains(listForNode1.get(i))) {
+				commonAncestorValue = listForNode1.get(i);
+			}
+		}
+		System.out.println("commonAncestorValue = " + commonAncestorValue);
+		int anc = findDistanceFromRoot(root, commonAncestorValue, "ancestor");
+		System.out.println("Distance of " + commonAncestorValue
+				+ " from root = " + anc);
+
+		return (l1 + l2 - 2*anc);
+	}
+
+	private static int findDistanceFromRoot(Node node, int n, String nodeNum) {
+		// TRY (improvement pending)
+		// http://algorithms.tutorialhorizon.com/find-the-distance-between-two-nodes-of-a-binary-tree/
+		boolean ancestorCheck = nodeNum.equals("ancestor");
+		boolean flag = nodeNum.equals("1");
+		if (node != null) {
+			if (n == node.getValue()) {
+				if (!ancestorCheck) {
+					if (flag)
+						listForNode1.add(node.getValue());
+					else
+						listForNode2.add(node.getValue());
+				}
+				System.out.println("...");
+			} else {
+				if (n < node.getValue()) {
+					if (!ancestorCheck) {
+						if (flag)
+							listForNode1.add(node.getValue());
+						else
+							listForNode2.add(node.getValue());
+					}
+					findDistanceFromRoot(node.getLeftChild(), n, nodeNum);
+					path++;
+				} else {
+					if (!ancestorCheck) {
+						if (flag)
+							listForNode1.add(node.getValue());
+						else
+							listForNode2.add(node.getValue());
+					}
+					findDistanceFromRoot(node.getRightChild(), n, nodeNum);
+					path++;
+				}
+			}
+		}
+		return path;
 	}
 
 	private static int findHeight(Node node) {
