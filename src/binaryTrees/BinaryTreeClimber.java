@@ -4,16 +4,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author namit
+ * @see 1. Creating BT, 2. Traversing BT, 3. Searching in BT, 4. Adding New Node
+ *      in BT, 5. Deleting a node in BT (making sure tree remains balanced)
+ * */
 public class BinaryTreeClimber {
 
 	static List<Node> ls = new ArrayList<Node>();
 	static boolean flag = false;
 
 	public static void main(String[] args) {
-		
-		ls.clear();
 
-		// Populating the node values
+		ls.clear();
+		
+		System.out.println("..................................Welcome to the world full of Binary Trees....................................");
+
+		// 1. Populating the node values
 		int rootVal = 2;
 		int rootLC1 = 4;
 		int rootRC2 = 6;
@@ -43,8 +50,8 @@ public class BinaryTreeClimber {
 		Node rootRC2RC2Node = new Node(rootRC2Node, rootRC2RC2, "rootRC2RC2");
 		rootRC2Node.setRightChild(rootRC2RC2Node);
 
-		// Reading the tree nodes.
-		System.out.println("Reading the binary tree now :");
+		// 2. Reading the tree nodes.
+		System.out.println(".................................................. Reading the binary tree now..........................................");
 		depthFirstTraversal(rootNode, "-");
 
 		// Checking the array for how it looks now...
@@ -58,8 +65,9 @@ public class BinaryTreeClimber {
 		ls.clear(); // since depthFirstTraversal() is being invoked again
 		depthFirstTraversal(newRoot, "+");
 
-		// Now the tree has been balanced, search effort has been reduced
+		// 3. Now the tree has been balanced, search effort has been reduced
 		// considerably
+		System.out.println(".................................. Searching an element in the BT ......................................");
 		int srchElem = 11;
 		boolean elementPresent = searchTheElement(newRoot, srchElem);
 		if (elementPresent)
@@ -67,14 +75,47 @@ public class BinaryTreeClimber {
 		else
 			System.out.println(srchElem + " is not present in the BT.");
 
-		// Trying to add an element in the tree, and keeping the sorting order
+		// 4. Trying to add an element in the tree, and keeping the sorting
+		// order
+		System.out.println(".................................. Adding an element in the BT ......................................");
 		int newElement = 9;
 		Node newNode = new Node(null, newElement, "newNode");
 		newRoot = addNewNode(newRoot, newNode);
 		ls.clear(); // since depthFirstTraversal() is being invoked again
 		depthFirstTraversal(newRoot, "+"); // checking the order, post update
-		
+
+		// 5. Trying to delete a node now, and we will require the newly
+		// available root node and the element recently added that we will
+		// remove
+		// To begin, we have to make sure that the element exists in the BT,
+		// hence need to perform search operation first
+		System.out.println(".................................. Deleting an element in the BT ......................................");
+		srchElem = 9;
+		elementPresent = searchTheElement(newRoot, srchElem);
+		if (elementPresent) {
+			System.out
+					.println(srchElem
+							+ " is present in the BT. Hence invoking delete operation now...");
+			newRoot = deleteNode(newRoot, srchElem);
+		} else
+			System.out.println(srchElem
+					+ " is not present in the BT. Delete operation refused.");
+
 		ls.clear();
+		depthFirstTraversal(newRoot, "~"); // checking the order, post delete operation
+	}
+
+	private static Node deleteNode(Node newRoot, int srchElem) {
+
+		int index = -1;
+		for (Node node : ls) {
+			index++;
+			if (node.getValue() == srchElem) {
+				break;
+			}
+		}
+		ls.remove(index);
+		return balanceTheTree(ls);
 	}
 
 	private static Node addNewNode(Node node, Node newNode) {
