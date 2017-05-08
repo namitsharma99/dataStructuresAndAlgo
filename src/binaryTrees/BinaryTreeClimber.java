@@ -6,8 +6,14 @@ import java.util.List;
 
 /**
  * @author namit
- * @see 1. Creating BT, 2. Traversing BT, 3. Searching in BT, 4. Adding New Node
- *      in BT, 5. Deleting a node in BT (making sure tree remains balanced)
+ * @see 1. Creating BT, 
+ * 		2. Traversing BT, 
+ * 		3. Searching in BT, 
+ * 		4. Adding New Node in BT, 
+ * 		5. Deleting a node in BT, 
+ * 		6. Finding height of the tree, 
+ * 		7. Finding shortest path between 2 elements
+ *      (making sure tree remains balanced)
  * */
 public class BinaryTreeClimber {
 
