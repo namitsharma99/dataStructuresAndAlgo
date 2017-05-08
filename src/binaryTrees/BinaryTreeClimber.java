@@ -103,6 +103,10 @@ public class BinaryTreeClimber {
 
 		ls.clear();
 		depthFirstTraversal(newRoot, "~"); // checking the order, post delete operation
+		
+		// Pending shortest paths
+		// Pending find min and max heights
+		
 	}
 
 	private static Node deleteNode(Node newRoot, int srchElem) {

@@ -1,6 +1,11 @@
 package trees;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class TreeClimber {
+
+	static Queue<Node> queue = new LinkedList<Node>();
 
 	public static void main(String[] args) {
 
@@ -26,9 +31,11 @@ public class TreeClimber {
 
 		System.out.println("Depth First Traversal --> ");
 		depthFirstTraversal(rootNode, "-");
-		
-		
-		
+
+		System.out.println("Breadth First Traversal --> ");
+		queue.add(rootNode);
+		breadthFirstTraversal();
+
 	}
 
 	private static Node createChild(Node parent, String id) {
@@ -38,6 +45,7 @@ public class TreeClimber {
 		return node;
 	}
 
+	// Pending using stack
 	private static void depthFirstTraversal(Node node, String result) {
 		System.out.println(result + node.getId());
 		for (Node nodeElem : node.getChildren()) {
@@ -45,4 +53,22 @@ public class TreeClimber {
 		}
 	}
 
+	private static int breadthFirstTraversal() {
+
+		Queue<Node> tempQueue = new LinkedList<Node>(queue);
+		if (tempQueue.isEmpty())
+			return 0;
+		queue.clear();
+		while (!tempQueue.isEmpty()) {
+			Node nodeInQueue = tempQueue.poll();
+			System.out.print(" - " + nodeInQueue.getId() + " -");
+			queue.addAll(nodeInQueue.getChildren());
+		}
+		System.out.println(" ");
+		breadthFirstTraversal();
+		return 1;
+	}
+
+	// Pending shortest paths
+	// Pending find min and max heights
 }
